@@ -1,11 +1,33 @@
 # https://getmail6.org/configuration.html#conf-options
+# Configuração para soundchain.shop
 
 [options]
-verbose = 0
+verbose = 1
 read_all = false
 delete = false
 max_messages_per_session = 500
 received = false
 delivered_to = false
 message_log_syslog = true
+max_message_size = 0
+
+# Exemplo de configuração para receber emails externos
+# Descomente e configure conforme necessário
+
+# [retriever]
+# type = POP3SSL
+# server = pop.provedor-externo.com
+# username = usuario@provedor-externo.com
+# password = senha_do_provedor
+# port = 995
+
+# [destination]
+# type = MDA_external
+# path = /usr/lib/dovecot/deliver
+# arguments = ("-d", "contact@soundchain.shop")
+
+# [filter]
+# type = Filter_classifier
+# path = /usr/bin/bogofilter
+# arguments = ("-n", "-I", "%(sender)")
 
