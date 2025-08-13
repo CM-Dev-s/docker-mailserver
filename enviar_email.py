@@ -15,7 +15,7 @@ from email import encoders
 from pathlib import Path
 
 # Configurações do servidor SMTP
-SMTP_SERVER = "mail.soundchain.shop"
+SMTP_SERVER = "soundchain.shop"  # Mudança temporária para testar localmente
 SMTP_PORT = 587  # Para STARTTLS
 SMTP_PORT_SSL = 465  # Para SSL direto
 DEFAULT_USER = "contact@soundchain.shop"
