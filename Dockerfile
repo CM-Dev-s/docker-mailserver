@@ -23,6 +23,8 @@ COPY target/bin/sedfile /usr/local/bin/sedfile
 RUN <<EOF
   chmod +x /usr/local/bin/sedfile
   adduser --quiet --system --group --disabled-password --home /var/lib/clamav --no-create-home --uid 200 clamav
+  # Install OpenSSL for SSL certificate generation
+  apt-get update && apt-get install -y openssl && apt-get clean && rm -rf /var/lib/apt/lists/*
 EOF
 
 COPY target/scripts/build/packages.sh /build/
@@ -289,6 +291,11 @@ COPY \
   target/scripts/startup/*.sh \
   /usr/local/bin/
 
+# Copy SSL generation scripts
+COPY gerar_ssl.sh /usr/local/bin/gerar_ssl.sh
+COPY setup_ssl_startup.sh /usr/local/bin/setup_ssl_startup.sh
+COPY start_mailserver.sh /usr/local/bin/start_mailserver.sh
+
 RUN chmod +x /usr/local/bin/*
 
 COPY target/scripts/helpers /usr/local/bin/helpers
@@ -305,7 +312,7 @@ ARG VCS_REVISION=unknown
 WORKDIR /
 EXPOSE 25 587 143 465 993 110 995 4190
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+CMD ["/usr/local/bin/start_mailserver.sh"]
 
 # These ENVs are referenced in target/supervisor/conf.d/saslauth.conf
 # and must be present when supervisord starts. Introduced by PR:

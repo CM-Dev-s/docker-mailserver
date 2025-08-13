@@ -22,7 +22,16 @@ Configuração do docker-mailserver para o domínio **soundchain.shop** com emai
 
 ### 2. Configuração Inicial
 
-Execute o script de configuração:
+**Build e inicialização:**
+```powershell
+# Build do container personalizado
+docker-compose build
+
+# Iniciar o mailserver
+docker-compose up -d
+```
+
+**Ou execute o script automatizado:**
 
 **Windows (PowerShell):**
 ```powershell
@@ -34,6 +43,12 @@ Execute o script de configuração:
 chmod +x setup_mailserver.sh
 ./setup_mailserver.sh
 ```
+
+**Características do build personalizado:**
+- ✅ OpenSSL pré-instalado
+- ✅ Geração automática de certificados SSL
+- ✅ Scripts de configuração incluídos
+- ✅ Otimizado para soundchain.shop
 
 ### 3. Configuração DNS Obrigatória
 
