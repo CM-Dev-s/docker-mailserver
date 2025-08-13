@@ -28,7 +28,7 @@ services:
       - ENABLE_UPDATE_CHECK=1
       - UPDATE_CHECK_INTERVAL=1d
       - PERMIT_DOCKER=none
-      - SSL_TYPE=letsencrypt
+      - SSL_TYPE=self-signed
       - TZ=America/Sao_Paulo
     cap_add:
       - NET_ADMIN # For Fail2Ban to work
