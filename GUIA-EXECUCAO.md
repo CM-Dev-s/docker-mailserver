@@ -30,14 +30,11 @@ soundchain.shop.         TXT  "v=spf1 mx ip4:212.85.1.63 ~all"
 _dmarc.soundchain.shop.  TXT  "v=DMARC1; p=quarantine; rua=mailto:contact@soundchain.shop"
 ```
 
-### Passo 3: Build e Iniciar o Mailserver
+### Passo 3: Iniciar o Mailserver
 
 ```powershell
 # Navegar para o diretório do projeto
 cd c:\Git\docker-mailserver
-
-# Build do container (com OpenSSL e scripts SSL incluídos)
-docker-compose build
 
 # Iniciar o container
 docker-compose up -d
@@ -45,12 +42,6 @@ docker-compose up -d
 # Verificar se está rodando
 docker ps
 ```
-
-**Nota**: O container agora inclui:
-- ✅ OpenSSL instalado
-- ✅ Scripts de geração SSL (`gerar_ssl.sh`)
-- ✅ Geração automática de certificados no startup
-- ✅ Configuração otimizada para `soundchain.shop`
 
 ### Passo 4: Configurar Usuário e Serviços
 
