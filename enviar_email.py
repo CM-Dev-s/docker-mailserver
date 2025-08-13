@@ -72,10 +72,15 @@ def enviar_email(destinatario, assunto, texto, arquivo_anexo=None,
             server = smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT_SSL)
             print(f"Conectado via SSL na porta {SMTP_PORT_SSL}")
         else:
-            # Conexão STARTTLS
+            # Conexão simples ou STARTTLS opcional
             server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-            server.starttls()
-            print(f"Conectado via STARTTLS na porta {SMTP_PORT}")
+            try:
+                # Tentar STARTTLS se disponível (opcional quando SSL_TYPE está vazio)
+                server.starttls()
+                print(f"Conectado via STARTTLS na porta {SMTP_PORT}")
+            except:
+                # Se STARTTLS falhar, continuar sem criptografia
+                print(f"Conectado SEM criptografia na porta {SMTP_PORT}")
         
         server.login(usuario, senha)
         server.send_message(msg)

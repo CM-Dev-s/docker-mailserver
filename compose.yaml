@@ -8,11 +8,12 @@ services:
     # More information about the mail-server ports:
     # https://docker-mailserver.github.io/docker-mailserver/latest/config/security/understanding-the-ports/
     ports:
-      - "25:25"    # SMTP  (explicit TLS => STARTTLS, Authentication is DISABLED => use port 465/587 instead)
-      - "143:143"  # IMAP4 (explicit TLS => STARTTLS)
-      - "465:465"  # ESMTP (implicit TLS)
-      - "587:587"  # ESMTP (explicit TLS => STARTTLS)
-      - "993:993"  # IMAP4 (implicit TLS)
+      - "25:25"    # SMTP  (sem SSL - apenas para relay interno)
+      - "143:143"  # IMAP4 (sem SSL - NÃO RECOMENDADO para produção)
+      - "587:587"  # ESMTP (com STARTTLS opcional)
+      # Remover portas SSL para evitar confusão:
+      # - "465:465"  # ESMTP (implicit TLS) - REMOVIDO
+      # - "993:993"  # IMAP4 (implicit TLS) - REMOVIDO
     volumes:
       - ./docker-data/dms/mail-data/:/var/mail/
       - ./docker-data/dms/mail-state/:/var/mail-state/
@@ -28,7 +29,7 @@ services:
       - ENABLE_UPDATE_CHECK=1
       - UPDATE_CHECK_INTERVAL=1d
       - PERMIT_DOCKER=none
-      - SSL_TYPE=letsencrypt
+      - SSL_TYPE=
       - TZ=America/Sao_Paulo
     cap_add:
       - NET_ADMIN # For Fail2Ban to work
